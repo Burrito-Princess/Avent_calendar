@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Read File Line by Line</title>
+</head>
+<body>
+
+<input type="file" id="fileInput" />
+
+<script>
+document.getElementById('fileInput').addEventListener('change', handleFile);
+
+function handleFile(event) {
+  const file = event.target.files[0];
+
+  if (!file) {
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(e) {
+    const content = e.target.result;
+    const lines = content.split('\n');
+    let ans = [];
+    let line_number = 0;
+    let sum = [];
+    let final_sum = 0;
+    lines.forEach(line => {
+      // Process each line here
+        let numbers = ["1","2","3","4","5","6","7","8","9","0"];
+        line = line.replaceAll("one", "o1e");
+        line = line.replaceAll("two", "t2o");
+        line = line.replaceAll("three", "t3e");
+        line = line.replaceAll("four", "f4r");
+        line = line.replaceAll("five", "f5e");
+        line = line.replaceAll("six", "s6x");
+        line = line.replaceAll("seven", "s7n");
+        line = line.replaceAll("eight", "e8t");
+        line = line.replaceAll("nine", "n9e");
+        let char = line.split('');
+        let line_numbers = [];
+        for (let i = 0; i < char.length; i++){
+            for (let j = 0; j < numbers.length; j++){
+                if (char[i] == numbers[j]){
+                    line_numbers.push(char[i]);
+                }
+            }
+        }
+        ans[line_number] = line_numbers;
+        line_number++
+    });
+    console.log(ans);
+    for (let i = 0; i < ans.length; i++) {
+        sum.push(parseInt(ans[i][0] + ans[i][ans[i].length-1]));
+    }
+    for (let i = 0; i < sum.length; i++) {
+        final_sum += sum[i];
+    }
+    console.log(final_sum);
+    console.log('File reading completed.');
+  };
+
+  reader.readAsText(file);
+}
+</script>
+
+</body>
+</html>
